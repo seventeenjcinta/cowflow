@@ -29,22 +29,22 @@ int main()
 	fileList = readFileList(filePath.c_str());
 	fileSize = fileList.size();
 	fileOut.open("ans", std::ios::out);
-	for(int i = 0; i < fileSize; i ++) {
-		for(int j = i + 1; j < fileSize; j ++) {
+	for(int i = 0; i < 20; i ++) {
+		for(int j = i + 1; j < 20; j ++) {
 			cal::Cal calAToB;
 			cal::Cal calBToA;
 			double ansAToB;
 			double ansBToA;
 			
 			fileOut << "cmp:" << i << " " << fileList[i] << " " << j << " " << fileList[j] << std::endl;
-			// printf("cmp: (%d %s) (%d %s)\n", i, fileList[i].c_str(), j, fileList[j].c_str());
+			printf("cmp: (%d %s) (%d %s)\n", i, fileList[i].c_str(), j, fileList[j].c_str());
 			functionListA = function::parseAssembler(filePath + fileList[i], "wasteA");
     		functionListB = function::parseAssembler(filePath + fileList[j], "wasteB");
-			// printf("size: %d %d\n", functionListA.size(), functionListB.size());
+			printf("size: %d %d\n", functionListA.size(), functionListB.size());
 			ansAToB = calAToB.Solve(functionListA, functionListB);
 			ansBToA = calBToA.Solve(functionListB, functionListA);
 			fileOut << "ans:" << fileList[i] << " " << fileList[j] << " " << ansAToB << " " << ansBToA << std::endl;
-			// printf("(%s %s) = (%lf %lf)\n", fileList[i].c_str(), fileList[j].c_str(), ansAToB, ansBToA);
+			printf("(%s %s) = (%lf %lf)\n", fileList[i].c_str(), fileList[j].c_str(), ansAToB, ansBToA);
 		}
 		
 	}
