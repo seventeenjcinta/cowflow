@@ -18,8 +18,49 @@
 - public 函数名首字母必须大写
 - private 函数名首字母必须小写
 
-### 以下是施工区
+### for xyz
+需要关注的两个个文件：`assembler.l`、`function.cpp`、`Makefile`
 
+#### assembler.l
+用于通过 lex 生成词法分析程序
+
+只定义了两种类型的 token：
+- 函数名：形如尖括号后跟一个冒号，尖括号内的即为函数名。正则表达式：`<(.*?)>:`。同时会掉用 `parseFuncName` 忽略 `wasteFunctionList` 列表里的函数名
+- 操作码：目前只添加了常见的且==去除后缀==的操作码。如想补全，链接：https://www.felixcloutier.com/x86/index.html
+
+lex 相关
+- `%option c++` 用于生成 `c++` 的词法分析程序
+- `%option outfile="assembler.cpp"` 用于生成指定名称的 `.cpp` 代码（之前默认是 lex.yy.cc）
+- `%option header-file="assembler.h"` 用于生成被 `include` 的 `.h` 代码
+- `yyless(num)`：返回匹配到的 `token` 的前面 `num` 个字符，`num` 后的内容==回退到输入==
+- `YYLeng()`：`c++` 模式下替代 `yyleng`
+- `YYText()`：`c++` 模式下替代 `yytext`
+
+用法及输出
+- 文档：http://dinosaur.compilertools.net/flex/flex_19.html
+- 源码：https://casa.nrao.edu/doxygen/classyyFlexLexer.html
+
+- ```c++
+  FlexLexer *lexer;
+  std::ifstream in;
+  std::ofstream out;
+  
+  i.open(fileInput);	// fileInput fileOutput 类型为 char*，即输入输出的文件名
+  o.open(fileOutput);
+  lexer = new yyFlexLexer;
+  while(num = lexer -> yylex(&i, &o)) {	// 如果不带参数默认标准输入输出
+      /* empty */
+  }
+  ```
+- `.l` 文件内如果想要输出，用 `yyout << something`
+
+#### function.cpp
+用了 `lex` 后 `function.cpp` 内没什么东西了，就简单看一下怎么从 `.cpp ` 用 `lex` 生成的头文件
+
+#### Makefile
+关注一下 `assembler` 前缀的文件的编译链即可，没什么坑点，注意需要放在被 `include` 的文件之前
+
+### 以下是施工区
 一些指令
 生成LLVM 字节码文件 clang -O3 -emit-llvm test.c -c -o test.bc llvm-dis-6.0 test2.b
 

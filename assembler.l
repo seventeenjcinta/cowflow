@@ -3,10 +3,10 @@
 #include <vector>
 #include <string>
 #include <fstream>
-#define DEFAULT_FUNCTION_LIST_SIZE 27 
+#define WASTE_FUNCTION_LIST_SIZE 28
 #define pb push_back
-#define FUNLEN 17
 
+// token
 enum
 {
     ERRORCHAR = 1,
@@ -50,8 +50,9 @@ int cnt = 0;
 int beginMark = 0;
 std::vector<std::string> opCodes;
 std::string funcName;
-// 不需要的函数名，新增内容时需要同步更新 DEFAULT_FUNCTION_LIST_SIZE
-std::vector<std::string>defaultFunctioBameList = {".plt",  
+// 最终需要删除的函数名，新增内容时需要同步更新 WASTE_FUNCTION_LIST_SIZE
+// WASTE_FUNCTION_LIST_SIZE 个数为 （行号 - 56 + 1）
+std::vector<std::string>wasteFunctionList = {".plt",  
                                                 "__do_global_dtors_aux",
                                                 "__isoc99_scanf@plt",
                                                 "__libc_csu_fini",
@@ -77,7 +78,8 @@ std::vector<std::string>defaultFunctioBameList = {".plt",
                                                 "register_tm_clones",
                                                 "search_List",
                                                 "sin@plt",
-                                                "system@plt"};
+                                                "system@plt",
+                                                "@plt"};
 
 bool parseFuncName();
 
@@ -94,8 +96,7 @@ ws			{delim}+
 
 {ws}	    { ; }
 {func}      {
-                // yyout << YYText() << std::endl;
-                yyless(YYLeng() - 1); /* yytext 为 <(.*?)> */ 
+                yyless(YYLeng() - 1); /* 去除最后的 ":" */ 
                 if(beginMark && parseFuncName()) {
                     yyout << funcName << std::endl;
                     yyout << cnt << std::endl;
@@ -107,7 +108,6 @@ ws			{delim}+
                 cnt = 0;
                 opCodes.clear();
                 funcName = YYText();
-                // std::cout << funcName << std::endl;
 
                 return FUNC; 
             }
@@ -148,6 +148,7 @@ xor         { opCodes.pb(YYText()); cnt ++; return XOR; }
 
 %%
 
+// 如果不需要对函数进行筛选，直接返回 true
 int yyFlexLexer::yywrap()
 {
     if(parseFuncName()) {
@@ -167,9 +168,9 @@ bool parseFuncName()
 {
     std::string::size_type res;
 
-    for(int i = 0; i < DEFAULT_FUNCTION_LIST_SIZE; i ++) {
+    for(int i = 0; i < WASTE_FUNCTION_LIST_SIZE; i ++) {
         // printf("%s\n", functionName.c_str());
-        res = funcName.find(defaultFunctioBameList[i]);
+        res = funcName.find(wasteFunctionList[i]);
         if(res != std::string::npos) {
             return false;
         } 
