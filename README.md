@@ -18,7 +18,7 @@
 - public 函数名首字母必须大写
 - private 函数名首字母必须小写
 
-### for xyz
+### for wxy
 需要关注的三个文件：`assembler.l`、`function.cpp`、`Makefile`
 
 #### assembler.l
