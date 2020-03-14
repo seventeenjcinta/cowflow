@@ -19,7 +19,7 @@
 - private 函数名首字母必须小写
 
 ### for xyz
-需要关注的两个个文件：`assembler.l`、`function.cpp`、`Makefile`
+需要关注的三个文件：`assembler.l`、`function.cpp`、`Makefile`
 
 #### assembler.l
 用于通过 lex 生成词法分析程序
