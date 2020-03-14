@@ -26,13 +26,13 @@
 
 只定义了两种类型的 token：
 - 函数名：形如尖括号后跟一个冒号，尖括号内的即为函数名。正则表达式：`<(.*?)>:`。同时会掉用 `parseFuncName` 忽略 `wasteFunctionList` 列表里的函数名
-- 操作码：目前只添加了常见的且==去除后缀==的操作码。如想补全，链接：https://www.felixcloutier.com/x86/index.html
+- 操作码：目前只添加了常见的且**去除后缀**的操作码。如想补全，链接：https://www.felixcloutier.com/x86/index.html
 
 lex 相关
 - `%option c++` 用于生成 `c++` 的词法分析程序
 - `%option outfile="assembler.cpp"` 用于生成指定名称的 `.cpp` 代码（之前默认是 lex.yy.cc）
 - `%option header-file="assembler.h"` 用于生成被 `include` 的 `.h` 代码
-- `yyless(num)`：返回匹配到的 `token` 的前面 `num` 个字符，`num` 后的内容==回退到输入==
+- `yyless(num)`：返回匹配到的 `token` 的前面 `num` 个字符，`num` 后的内容**回退到输入**
 - `YYLeng()`：`c++` 模式下替代 `yyleng`
 - `YYText()`：`c++` 模式下替代 `yytext`
 
