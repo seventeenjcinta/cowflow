@@ -83,7 +83,7 @@ bool parseFuncName();
 
 %}
 %option c++
-%option outfile="assembler.c"
+%option outfile="assembler.cpp"
 %option header-file="assembler.h"
 
 func        <(.*?)>:
@@ -93,7 +93,8 @@ ws			{delim}+
 %%
 
 {ws}	    { ; }
-{func}      { 
+{func}      {
+                // yyout << YYText() << std::endl;
                 yyless(YYLeng() - 1); /* yytext 为 <(.*?)> */ 
                 if(beginMark && parseFuncName()) {
                     yyout << funcName << std::endl;
@@ -177,21 +178,21 @@ bool parseFuncName()
     return true;
 }
 
-int main()
-{   
-    FlexLexer *lexer;
-    std::ifstream input;
-    std::ofstream output;
-    char *fileI = "tmp";
-    char *fileO = "tmpout";
+// int main()
+// {   
+//     FlexLexer *lexer;
+//     std::ifstream input;
+//     std::ofstream output;
+//     char *fileI = "tmp";
+//     char *fileO = "tmpout";
 
-    input.open(fileI);
-    output.open(fileO);
-    lexer = new yyFlexLexer();
-    while(lexer -> yylex(&input, &output)) {
-        // lexer -> yy// LexerInput(str, 10);
-        /* empty */
-    }
+//     input.open(fileI);
+//     output.open(fileO);
+//     lexer = new yyFlexLexer();
+//     while(lexer -> yylex(&input, &output)) {
+//         // lexer -> yy// LexerInput(str, 10);
+//         /* empty */
+//     }
 
-    return 0;
-}
+//     return 0;
+// }

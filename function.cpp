@@ -35,7 +35,6 @@ std::string defaultFunctioBameList[] = {"_init",    // 0
 
 bool functionNameCheck(std::string functionName)
 {
-    return true;
     std::string::size_type res;
 
     for(int i = 0; i < DEFAULT_FUNCTION_LIST_SIZE; i ++) {
@@ -51,113 +50,22 @@ bool functionNameCheck(std::string functionName)
     return true;
 }
 
-std::vector<Function> parseAssembler(const std::string fileI, const std::string fileO)
+std::vector<Function> parseAssembler(const char *fileI, const char *fileO)
 {
-    std::vector<Function> functionList;
-    std::fstream fileIn;
-    std::fstream fileOut;
-    std::string buff;
-    Function nowFunction;
-    int functionListSize;
-
-    fileIn.open(fileI.c_str(), std::ios::in);
-    fileOut.open(fileO.c_str(), std::ios::out);
-    LogInfo("open file %s %s\n", fileI.c_str(), fileO.c_str());
-    while(getline(fileIn, buff)) {
-        int buffSize;
-        int index;
-
-        buffSize = buff.size();
-        if(buffSize > 4) {
-            if(buff[buffSize - 1] == ':' && buff[buffSize - 2] == '>') {
-                std::string name;
-
-                index = buffSize - 3;
-                while(buff[index] != '<') {
-                    name += buff[index];
-                    index --;
-                }        
-                std::reverse(name.begin(), name.end());
-                nowFunction.name = name;
-                // std::cout << "findname:::: " << name << "\n";
-                break;
-            }
-        }
+    int num;
+    char *str;
+    std::ifstream i;
+    std::ofstream o;
+    FlexLexer *lexer;
+    
+    i.open(fileI);
+    o.open(fileO);
+    // printf("%s %s\n", fileI, fileO);
+    lexer = new yyFlexLexer;
+    while(num = lexer -> yylex(&i, &o)) {
+        // printf("num = %d\n", num);
+        /* empty */
     }
-    while(getline(fileIn, buff)) {
-        int buffSize;
-        int index;
-
-        index = 0;
-        buffSize = buff.size();
-        if(buffSize <= 4 || buff[0] == '#' || buff[0] == '\n' || buff[0] == 'D') { // 注释行或空行或 Disassembly
-            continue;
-        } else if(buff[buffSize - 1] == ':' && buff[buffSize - 2] == '>') {
-            std::string name;
-            Function newFunction;
-
-            index = buffSize - 3;
-            while(buff[index] != '<') {
-                name += buff[index];
-                index --;
-            } 
-            std::reverse(name.begin(), name.end());
-            nowFunction.len = nowFunction.V.size();
-            if(functionNameCheck(nowFunction.name)) {
-                functionList.pb(nowFunction);
-                LogInfo("get function: %s in file: %s\n", nowFunction.name.c_str(), fileI.c_str());
-            }
-            newFunction.name = name;
-            nowFunction = newFunction;
-            // std::cout << "findname: " << name << "\n";
-        } else {
-            std::string opcode;
-            std::string tmp;
-            // for(int i = 0; i < buffSize; i ++) {
-            //     printf("%d %c\n", i, buff[i]);
-            // }
-            // std::cout << buff << std::endl;
-            // printf("111 = %c\n", buff[32]);
-            if(buff[0] == ' ' && buff[1] == ' ') {
-                index = 32;
-            } else {
-                index = 28;
-            }
-            if(buffSize < index) {
-                continue;
-            }
-            while(buff[index] != ' ' && index < buffSize) {
-                // printf("222 = %c\n", buff[index]);
-                opcode += buff[index];
-                index ++;
-            }
-            // std::cout << opcode << std::endl;
-            nowFunction.V.pb(opcode);
-        }
-    }
-    nowFunction.len = nowFunction.V.size();
-    if(functionNameCheck(nowFunction.name)) {
-        functionList.pb(nowFunction);
-        LogInfo("get function: %s in file: %s\n", nowFunction.name.c_str(), fileI.c_str());
-    }
-    functionListSize = functionList.size();
-    for(int i = 0; i < functionListSize; i ++) {
-        int lineSize;
-
-        lineSize = functionList[i].V.size();
-        // std::cout << "name = " << functionList[i].name << std::endl;
-        // std::cout << functionList[i].len << std::endl;
-        fileOut << functionList[i].name << std::endl;
-        fileOut << functionList[i].len << std::endl;
-        for(int j = 0; j < lineSize; j ++) {
-            // std::cout << functionList[i].V[j] <<std:: endl;
-            fileOut << functionList[i].V[j] <<std:: endl;
-        }
-    }
-    fileIn.close();
-    fileOut.close();
-
-    return functionList;
 }
 
 }

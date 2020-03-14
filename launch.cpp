@@ -17,6 +17,8 @@ int main()
 	std::vector<function::Function> functionListB;
 	std::set<std::string> S;
 	std::string filePath;
+	std::string filePathOutput;
+	std::string filePathParse;
 	std::fstream fileOut;
 	int fileSize;
 	// myLog::Log log(myLog::Log::INFO, "log.txt", myLog::Log::OVER);
@@ -27,20 +29,32 @@ int main()
 	}
 	Init(config);
 	filePath = config.ReadString("FILE_PATH", "");
-	fileList = readFileList(filePath.c_str());
+	filePathOutput = config.ReadString("FILE_PATH_OUTPUT", "");
+	filePathParse = config.ReadString("FILE_PATH_PARSE", "");
+	fileList = readFileList(filePathOutput.c_str());
 	fileSize = fileList.size();
 	for(int i = 0; i < fileSize; i ++) {
-		int vSize;
+		std::string output;
+		std::string parse;
 
-		functionListA = function::parseAssembler(filePath + fileList[i], "wasteA");
-		vSize = functionListA.size();
-		for(int j = 0; j < vSize; j ++) {
-			S.insert(functionListA[j].name);
-		}
+		output = filePathOutput + fileList[i];
+		parse = filePathParse + fileList[i];
+		parse[parse.size() - 1] = 'p';
+		functionListA = function::parseAssembler(output.c_str(), parse.c_str());
 	}
-	for(auto it : S) {
-		std::cout << it << std::endl;
-	}
+
+	// for(int i = 0; i < fileSize; i ++) {
+	// 	int vSize;
+
+	// 	functionListA = function::parseAssembler(filePath + fileList[i], "wasteA");
+	// 	vSize = functionListA.size();
+	// 	for(int j = 0; j < vSize; j ++) {
+	// 		S.insert(functionListA[j].V[k]);
+	// 	}
+	// }
+	// for(auto it : S) {
+	// 	std::cout << it << std::endl;
+	// }
 	// fileOut.open("ans", std::ios::out);
 	// for(int i = 0; i < 20; i ++) {
 	// 	for(int j = i + 1; j < 20; j ++) {
