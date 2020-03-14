@@ -19,13 +19,13 @@
 - private 函数名首字母必须小写
 
 ### for xyz
-需要关注的两个个文件：`assembler.l`、`function.cpp`、`Makefile`
+需要关注的三个文件：`assembler.l`、`function.cpp`、`Makefile`
 
 #### assembler.l
 用于通过 lex 生成词法分析程序
 
 只定义了两种类型的 token：
-- 函数名：形如尖括号后跟一个冒号，尖括号内的即为函数名。正则表达式：`<(.*?)>:`。同时会掉用 `parseFuncName` 忽略 `wasteFunctionList` 列表里的函数名
+- 函数名：形如尖括号后跟一个冒号，尖括号内的即为函数名。正则表达式：`<(.*?)>:`。同时会调用 `parseFuncName` 忽略 `wasteFunctionList` 列表里的函数名
 - 操作码：目前只添加了常见的且**去除后缀**的操作码。如想补全，链接：https://www.felixcloutier.com/x86/index.html
 
 lex 相关
@@ -52,7 +52,7 @@ lex 相关
       /* empty */
   }
   ```
-- `.l` 文件内如果想要输出，用 `yyout << something`
+- `.l` 文件内如果想要输出到目标输出，用 `yyout << something`
 
 #### function.cpp
 用了 `lex` 后 `function.cpp` 内没什么东西了，就简单看一下怎么从 `.cpp ` 用 `lex` 生成的头文件
