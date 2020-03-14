@@ -4,15 +4,21 @@ include config.ini
 
 LLC = llc-6.0
 CLANG = clang++
-OBJECT = launch.o function.o config.o km.o log.o cal.o netflow.o
+OBJECT = assembler.o launch.o function.o config.o km.o log.o cal.o netflow.o 
 
 .PHONY: cowflow clean
 
-cowflow: $(OBJECT)
+cowflow: $(OBJECT) 
 	g++ -g $(OBJECT) -o cowflow
 
 file: 
 	gcc -O2 $^ -o $@
+
+assembler.o: assembler.cpp
+	g++ -g -c assembler.cpp
+
+assembler.cpp: assembler.l
+	lex assembler.l
 
 cal.o: cal.h cal.cpp netflow.o function.o lcs.o
 	g++ -g -c cal.cpp

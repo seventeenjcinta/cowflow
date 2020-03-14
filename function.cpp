@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "function.h"
+#include "assembler.h"
 #include "log.h"
 #define pb push_back
 
@@ -32,9 +33,9 @@ std::string defaultFunctioBameList[] = {"_init",    // 0
                                         "_fini",
                                         "@plt"};                  
 
-
 bool functionNameCheck(std::string functionName)
 {
+    return true;
     std::string::size_type res;
 
     for(int i = 0; i < DEFAULT_FUNCTION_LIST_SIZE; i ++) {

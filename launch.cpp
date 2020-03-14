@@ -15,6 +15,7 @@ int main()
 	std::vector<std::string> fileList;
 	std::vector<function::Function> functionListA;
 	std::vector<function::Function> functionListB;
+	std::set<std::string> S;
 	std::string filePath;
 	std::fstream fileOut;
 	int fileSize;
@@ -28,26 +29,40 @@ int main()
 	filePath = config.ReadString("FILE_PATH", "");
 	fileList = readFileList(filePath.c_str());
 	fileSize = fileList.size();
-	fileOut.open("ans", std::ios::out);
-	for(int i = 0; i < 20; i ++) {
-		for(int j = i + 1; j < 20; j ++) {
-			cal::Cal calAToB;
-			cal::Cal calBToA;
-			double ansAToB;
-			double ansBToA;
-			
-			fileOut << "cmp:" << i << " " << fileList[i] << " " << j << " " << fileList[j] << std::endl;
-			printf("cmp: (%d %s) (%d %s)\n", i, fileList[i].c_str(), j, fileList[j].c_str());
-			functionListA = function::parseAssembler(filePath + fileList[i], "wasteA");
-    		functionListB = function::parseAssembler(filePath + fileList[j], "wasteB");
-			printf("size: %d %d\n", functionListA.size(), functionListB.size());
-			ansAToB = calAToB.Solve(functionListA, functionListB);
-			ansBToA = calBToA.Solve(functionListB, functionListA);
-			fileOut << "ans:" << fileList[i] << " " << fileList[j] << " " << ansAToB << " " << ansBToA << std::endl;
-			printf("(%s %s) = (%lf %lf)\n", fileList[i].c_str(), fileList[j].c_str(), ansAToB, ansBToA);
+	for(int i = 0; i < fileSize; i ++) {
+		int vSize;
+
+		functionListA = function::parseAssembler(filePath + fileList[i], "wasteA");
+		vSize = functionListA.size();
+		for(int j = 0; j < vSize; j ++) {
+			S.insert(functionListA[j].name);
 		}
-		
 	}
+	for(auto it : S) {
+		std::cout << it << std::endl;
+	}
+	// fileOut.open("ans", std::ios::out);
+	// for(int i = 0; i < 20; i ++) {
+	// 	for(int j = i + 1; j < 20; j ++) {
+	// 		cal::Cal calAToB;
+	// 		cal::Cal calBToA;
+	// 		double ansAToB;
+	// 		double ansBToA;
+			
+	// 		fileOut << "cmp:" << i << " " << fileList[i] << " " << j << " " << fileList[j] << std::endl;
+	// 		printf("cmp: (%d %s) (%d %s)\n", i, fileList[i].c_str(), j, fileList[j].c_str());
+	// 		functionListA = function::parseAssembler(filePath + fileList[i], "wasteA");
+    // 		functionListB = function::parseAssembler(filePath + fileList[j], "wasteB");
+	// 		printf("size: %d %d\n", functionListA.size(), functionListB.size());
+	// 		ansAToB = calAToB.Solve(functionListA, functionListB);
+	// 		ansBToA = calBToA.Solve(functionListB, functionListA);
+	// 		fileOut << "ans:" << fileList[i] << " " << fileList[j] << " " << ansAToB << " " << ansBToA << std::endl;
+	// 		printf("(%s %s) = (%lf %lf)\n", fileList[i].c_str(), fileList[j].c_str(), ansAToB, ansBToA);
+	// 	}
+		
+	// }
+
+
 	// fileAIn = config.ReadString("fileAIn", "");
 	// fileAOut = config.ReadString("fileAOut", "");
 	// fileBIn = config.ReadString("fileBIn", "");

@@ -1,111 +1,197 @@
 %{
-#include <stdio.h>
-#define FUNLEN      17
-#define ERRORCHAR   1
-#define FUNC        2
-#define ADD			3
-#define CALL		4
-#define CMP			5
-#define CVTSS2SD	6
-#define JA			7
-#define JE			8
-#define JG			9
-#define JL			10
-#define JMP			11
-#define JNE			12
-#define LEA			13
-#define MOV			14
-#define POP			15
-#define PUSH		16
-#define REPZ		17
-#define RET			18
-#define XCHG		19
-#define XOR		    20
+#include <cstdio>
+#include <vector>
+#include <string>
+#include <fstream>
+#define DEFAULT_FUNCTION_LIST_SIZE 27 
+#define pb push_back
+#define FUNLEN 17
+
+enum
+{
+    ERRORCHAR = 1,
+    FUNC,
+    ADD,
+    AND,
+    CALL,
+    CLT,
+    CMOV,
+    CMP,
+    CVTSD2SS,
+    CVTSS2SD,
+    DIV,
+    JA,
+    JB,
+    JE,
+    JG,
+    JL,
+    JMP,
+    JN,
+    JP,
+    JS,
+    LEA,
+    MOV,
+    MUL,
+    NEG,
+    POP,
+    PUSH,
+    REP,
+    RET,
+    SET,
+    SUB,
+    TEST,
+    UCOMISD,
+    UCOMISS,
+    XCHG,
+    XOR
+};
+
+int cnt = 0;
+int beginMark = 0;
+std::vector<std::string> opCodes;
+std::string funcName;
+// 不需要的函数名，新增内容时需要同步更新 DEFAULT_FUNCTION_LIST_SIZE
+std::vector<std::string>defaultFunctioBameList = {".plt",  
+                                                "__do_global_dtors_aux",
+                                                "__isoc99_scanf@plt",
+                                                "__libc_csu_fini",
+                                                "__libc_csu_init",
+                                                "_dl_relocate_static_pie",
+                                                "_fini",
+                                                "_init",
+                                                "_IO_getc@plt",
+                                                "_IO_putc@plt",
+                                                "_start",
+                                                "cos@plt",
+                                                "deregister_tm_clones",
+                                                "exit@plt",
+                                                "exp@plt",
+                                                "frame_dummy",
+                                                "free@plt",
+                                                "get_newNode",
+                                                "malloc@plt",
+                                                "meau",
+                                                "printf@plt",
+                                                "putchar@plt",
+                                                "puts@plt",
+                                                "register_tm_clones",
+                                                "search_List",
+                                                "sin@plt",
+                                                "system@plt"};
+
+bool parseFuncName();
 
 %}
+%option c++
+%option outfile="assembler.c"
+%option header-file="assembler.h"
 
-func <(.*?)>:
+func        <(.*?)>:
 delim		[ \t \n]
 ws			{delim}+
 
 %%
 
 {ws}	    { ; }
-{func}      { return FUNC; }
-add       	{ return ADD; }
-call       	{ return CALL; }
-cmp       	{ return CMP; }
-cvtss2sd    { return CVTSS2SD; }
-ja       	{ return JA; }
-je       	{ return JE; }
-jg       	{ return JG; }
-jl       	{ return JL; }
-jmp       	{ return JMP; }
-jne       	{ return JNE; }
-lea       	{ return LEA; }
-mov       	{ return MOV; }
-pop       	{ return POP; }
-push       	{ return PUSH; }
-repz       	{ return REPZ; }
-ret       	{ return RET; }
-xchg       	{ return XCHG; }
-xor       	{ return XOR; }
+{func}      { 
+                yyless(YYLeng() - 1); /* yytext 为 <(.*?)> */ 
+                if(beginMark && parseFuncName()) {
+                    yyout << funcName << std::endl;
+                    yyout << cnt << std::endl;
+                    for(int i = 0; i < cnt; i ++) {
+                        yyout << opCodes[i] << std::endl;
+                    }
+                }
+                beginMark ++;
+                cnt = 0;
+                opCodes.clear();
+                funcName = YYText();
+                // std::cout << funcName << std::endl;
+
+                return FUNC; 
+            }
+add         { opCodes.pb(YYText()); cnt ++; return ADD; }
+and         { opCodes.pb(YYText()); cnt ++; return AND; }
+call        { opCodes.pb(YYText()); cnt ++; return CALL; } 
+clt         { opCodes.pb(YYText()); cnt ++; return CLT; }
+cmov        { opCodes.pb(YYText()); cnt ++; return CMOV; } 
+cmp         { opCodes.pb(YYText()); cnt ++; return CMP; }
+cvtsd2ss    { opCodes.pb(YYText()); cnt ++; return CVTSD2SS; }     
+cvtss2sd    { opCodes.pb(YYText()); cnt ++; return CVTSS2SD; }     
+div         { opCodes.pb(YYText()); cnt ++; return DIV; } 
+ja          { opCodes.pb(YYText()); cnt ++; return JA; }
+jb          { opCodes.pb(YYText()); cnt ++; return JB; }
+je          { opCodes.pb(YYText()); cnt ++; return JE; }
+jg          { opCodes.pb(YYText()); cnt ++; return JG; }
+jl          { opCodes.pb(YYText()); cnt ++; return JL; }
+jmp         { opCodes.pb(YYText()); cnt ++; return JMP; }
+jn          { opCodes.pb(YYText()); cnt ++; return JN; }
+jp          { opCodes.pb(YYText()); cnt ++; return JP; }
+js          { opCodes.pb(YYText()); cnt ++; return JS; }
+lea         { opCodes.pb(YYText()); cnt ++; return LEA; }
+mov         { opCodes.pb(YYText()); cnt ++; return MOV; }
+mul         { opCodes.pb(YYText()); cnt ++; return MUL; }
+neg         { opCodes.pb(YYText()); cnt ++; return NEG; }
+pop         { opCodes.pb(YYText()); cnt ++; return POP; }
+push        { opCodes.pb(YYText()); cnt ++; return PUSH; } 
+rep         { opCodes.pb(YYText()); cnt ++; return REP; }
+ret         { opCodes.pb(YYText()); cnt ++; return RET; }
+set         { opCodes.pb(YYText()); cnt ++; return SET; }
+sub         { opCodes.pb(YYText()); cnt ++; return SUB; }
+test        { opCodes.pb(YYText()); cnt ++; return TEST; } 
+ucomisd     { opCodes.pb(YYText()); cnt ++; return UCOMISD; } 
+ucomiss     { opCodes.pb(YYText()); cnt ++; return UCOMISS; } 
+xchg        { opCodes.pb(YYText()); cnt ++; return XCHG; } 
+xor         { opCodes.pb(YYText()); cnt ++; return XOR; }
 .           { return ERRORCHAR; }
 
 %%
 
-void parseFunc()
+int yyFlexLexer::yywrap()
 {
-    int len;
-
-    for(int i = yyleng - 3; i > 0; i --) {  // 提取 <funname>: 中 funname 的部分
-        fprintf(yyout, "%c", yytext[i]);    // 注意这里是逆序输出！！！！
+    if(parseFuncName()) {
+        yyout << funcName << std::endl;
+        yyout << cnt << std::endl;
+        for(int i = 0; i < cnt; i ++) {
+            yyout << opCodes[i] << std::endl;
+        }
     }
-    fprintf(yyout, "\n");   
+    cnt = 0;
+    opCodes.clear();
+
+    return 1;
 }
 
-void writeFile(int num)
+bool parseFuncName()
 {
-    switch(num) {
-        case ERRORCHAR  : { break; }
-        case FUNC       : { parseFunc(); break; }
-        case ADD		: { fprintf(yyout, "add\n"); break; }
-        case CALL	    : { fprintf(yyout, "call\n"); break; }
-        case CMP		: { fprintf(yyout, "cmp\n"); break; }
-        case CVTSS2SD   : { fprintf(yyout, "cvtss2sd\n"); break; }
-        case JA		    : { fprintf(yyout, "ja\n"); break; }
-        case JE		    : { fprintf(yyout, "je\n"); break; }
-        case JG		    : { fprintf(yyout, "jg\n"); break; }
-        case JL		    : { fprintf(yyout, "jl\n"); break; }
-        case JMP		: { fprintf(yyout, "jmp\n"); break; }
-        case JNE		: { fprintf(yyout, "jne\n"); break; }
-        case LEA		: { fprintf(yyout, "lea\n"); break; }
-        case MOV		: { fprintf(yyout, "mov\n"); break; }
-        case POP		: { fprintf(yyout, "pop\n"); break; }
-        case PUSH	    : { fprintf(yyout, "push\n"); break; }
-        case REPZ	    : { fprintf(yyout, "repz\n"); break; }
-        case RET		: { fprintf(yyout, "ret\n"); break; }
-        case XCHG	    : { fprintf(yyout, "xchg\n"); break; }
-        case XOR		: { fprintf(yyout, "xor\n"); break; }
+    std::string::size_type res;
+
+    for(int i = 0; i < DEFAULT_FUNCTION_LIST_SIZE; i ++) {
+        // printf("%s\n", functionName.c_str());
+        res = funcName.find(defaultFunctioBameList[i]);
+        if(res != std::string::npos) {
+            return false;
+        } 
     }
+
+    return true;
 }
 
-int main(int argc, char **argv)
-{
-    int num;
+int main()
+{   
+    FlexLexer *lexer;
+    std::ifstream input;
+    std::ofstream output;
+    char *fileI = "tmp";
+    char *fileO = "tmpout";
 
-    if(argc == 3) {
-        yyin = fopen(argv[1], "r");
-        yyout = fopen(argv[2], "w");
-        if(yyin == NULL) {
-            printf("open err!\n");
-
-            return 0;
-        }
-        while(num = yylex()) {
-            writeFile(num);
-        }
-    } else {
-        printf("some err.\n");
+    input.open(fileI);
+    output.open(fileO);
+    lexer = new yyFlexLexer();
+    while(lexer -> yylex(&input, &output)) {
+        // lexer -> yy// LexerInput(str, 10);
+        /* empty */
     }
+
+    return 0;
 }
