@@ -47,7 +47,7 @@ enum
 };
 
 int cnt = 0;
-int beginMark = 0;
+bool beginMark = false;
 std::vector<std::string> opCodes;
 std::string funcName;
 // 最终需要删除的函数名，新增内容时需要同步更新 WASTE_FUNCTION_LIST_SIZE
@@ -79,7 +79,7 @@ std::vector<std::string>wasteFunctionList = {".plt",
                                                 "search_List",
                                                 "sin@plt",
                                                 "system@plt",
-                                                "@plt"};
+                                                "plt"};
 
 bool parseFuncName();
 
@@ -104,14 +104,15 @@ ws			{delim}+
                         yyout << opCodes[i] << std::endl;
                     }
                 }
-                beginMark ++;
+                beginMark = true;
                 cnt = 0;
                 opCodes.clear();
                 funcName = YYText();
 
                 return FUNC; 
             }
-add         { opCodes.pb(YYText()); cnt ++; return ADD; }
+add         { /* 这里可以调用函数，用于处理 yytext */ 
+              opCodes.pb(YYText()); cnt ++; return ADD; }
 and         { opCodes.pb(YYText()); cnt ++; return AND; }
 call        { opCodes.pb(YYText()); cnt ++; return CALL; } 
 clt         { opCodes.pb(YYText()); cnt ++; return CLT; }
@@ -148,7 +149,6 @@ xor         { opCodes.pb(YYText()); cnt ++; return XOR; }
 
 %%
 
-// 如果不需要对函数进行筛选，直接返回 true
 int yyFlexLexer::yywrap()
 {
     if(parseFuncName()) {
@@ -164,12 +164,12 @@ int yyFlexLexer::yywrap()
     return 1;
 }
 
+// 如果不需要对函数进行筛选，直接返回 true
 bool parseFuncName()
 {
     std::string::size_type res;
 
     for(int i = 0; i < WASTE_FUNCTION_LIST_SIZE; i ++) {
-        // printf("%s\n", functionName.c_str());
         res = funcName.find(wasteFunctionList[i]);
         if(res != std::string::npos) {
             return false;
@@ -179,6 +179,7 @@ bool parseFuncName()
     return true;
 }
 
+// 用于单测，需要将 %opyion 删除 outfile 和 header-file
 // int main()
 // {   
 //     FlexLexer *lexer;

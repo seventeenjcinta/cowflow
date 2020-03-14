@@ -499,7 +499,7 @@ enum
 };
 
 int cnt = 0;
-int beginMark = 0;
+bool beginMark = false;
 std::vector<std::string> opCodes;
 std::string funcName;
 // 最终需要删除的函数名，新增内容时需要同步更新 WASTE_FUNCTION_LIST_SIZE
@@ -531,7 +531,7 @@ std::vector<std::string>wasteFunctionList = {".plt",
                                                 "search_List",
                                                 "sin@plt",
                                                 "system@plt",
-                                                "@plt"};
+                                                "plt"};
 
 bool parseFuncName();
 
@@ -746,7 +746,7 @@ YY_RULE_SETUP
                         yyout << opCodes[i] << std::endl;
                     }
                 }
-                beginMark ++;
+                beginMark = true;
                 cnt = 0;
                 opCodes.clear();
                 funcName = YYText();
@@ -757,179 +757,180 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 114 "assembler.l"
-{ opCodes.pb(YYText()); cnt ++; return ADD; }
+{ /* 这里可以调用函数，用于处理 yytext */ 
+              opCodes.pb(YYText()); cnt ++; return ADD; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 115 "assembler.l"
+#line 116 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return AND; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 116 "assembler.l"
+#line 117 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return CALL; } 
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 117 "assembler.l"
+#line 118 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return CLT; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 118 "assembler.l"
+#line 119 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return CMOV; } 
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 119 "assembler.l"
+#line 120 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return CMP; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 120 "assembler.l"
+#line 121 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return CVTSD2SS; }     
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 121 "assembler.l"
+#line 122 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return CVTSS2SD; }     
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 122 "assembler.l"
+#line 123 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return DIV; } 
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 123 "assembler.l"
+#line 124 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return JA; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 124 "assembler.l"
+#line 125 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return JB; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 125 "assembler.l"
+#line 126 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return JE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 126 "assembler.l"
+#line 127 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return JG; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 127 "assembler.l"
+#line 128 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return JL; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 128 "assembler.l"
+#line 129 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return JMP; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 129 "assembler.l"
+#line 130 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return JN; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 130 "assembler.l"
+#line 131 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return JP; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 131 "assembler.l"
+#line 132 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return JS; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 132 "assembler.l"
+#line 133 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return LEA; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 133 "assembler.l"
+#line 134 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return MOV; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 134 "assembler.l"
+#line 135 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return MUL; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 135 "assembler.l"
+#line 136 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return NEG; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 136 "assembler.l"
+#line 137 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return POP; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 137 "assembler.l"
+#line 138 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return PUSH; } 
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 138 "assembler.l"
+#line 139 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return REP; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 139 "assembler.l"
+#line 140 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return RET; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 140 "assembler.l"
+#line 141 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return SET; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 141 "assembler.l"
+#line 142 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return SUB; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 142 "assembler.l"
+#line 143 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return TEST; } 
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 143 "assembler.l"
+#line 144 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return UCOMISD; } 
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 144 "assembler.l"
+#line 145 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return UCOMISS; } 
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 145 "assembler.l"
+#line 146 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return XCHG; } 
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 146 "assembler.l"
+#line 147 "assembler.l"
 { opCodes.pb(YYText()); cnt ++; return XOR; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 147 "assembler.l"
+#line 148 "assembler.l"
 { return ERRORCHAR; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 149 "assembler.l"
+#line 150 "assembler.l"
 ECHO;
 	YY_BREAK
-#line 933 "assembler.cpp"
+#line 934 "assembler.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1892,10 +1893,9 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 149 "assembler.l"
+#line 150 "assembler.l"
 
 
-// 如果不需要对函数进行筛选，直接返回 true
 int yyFlexLexer::yywrap()
 {
     if(parseFuncName()) {
@@ -1911,12 +1911,12 @@ int yyFlexLexer::yywrap()
     return 1;
 }
 
+// 如果不需要对函数进行筛选，直接返回 true
 bool parseFuncName()
 {
     std::string::size_type res;
 
     for(int i = 0; i < WASTE_FUNCTION_LIST_SIZE; i ++) {
-        // printf("%s\n", functionName.c_str());
         res = funcName.find(wasteFunctionList[i]);
         if(res != std::string::npos) {
             return false;
@@ -1926,6 +1926,7 @@ bool parseFuncName()
     return true;
 }
 
+// 用于单测，需要将 %opyion 删除 outfile 和 header-file
 // int main()
 // {   
 //     FlexLexer *lexer;
