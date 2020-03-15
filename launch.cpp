@@ -17,7 +17,7 @@ int main()
 	std::vector<function::Function> functionListB;
 	std::set<std::string> S;
 	std::string filePath;
-	std::string filePathOutput;
+	std::string filePathAssembler;
 	std::string filePathParse;
 	std::fstream fileOut;
 	int fileSize;
@@ -29,18 +29,18 @@ int main()
 	}
 	Init(config);
 	filePath = config.ReadString("FILE_PATH", "");
-	filePathOutput = config.ReadString("FILE_PATH_OUTPUT", "");
+	filePathAssembler = config.ReadString("FILE_PATH_ASSEMBLER", "");
 	filePathParse = config.ReadString("FILE_PATH_PARSE", "");
-	fileList = readFileList(filePathOutput.c_str());
+	fileList = readFileList(filePathAssembler.c_str());
 	fileSize = fileList.size();
 	for(int i = 0; i < fileSize; i ++) {
 		std::string output;
 		std::string parse;
 
-		output = filePathOutput + fileList[i];
+		output = filePathAssembler + fileList[i];
 		parse = filePathParse + fileList[i];
-		parse[parse.size() - 1] = 'p';
-		functionListA = function::parseAssembler(output.c_str(), parse.c_str());
+		parse[parse.size() - 1] = 'p';			// 随便拍脑袋想出来的后缀
+		function::parseAssembler(output.c_str(), parse.c_str());
 	}
 
 	// for(int i = 0; i < fileSize; i ++) {

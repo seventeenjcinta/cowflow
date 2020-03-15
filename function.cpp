@@ -11,7 +11,7 @@ namespace function {
 
 // extern myLog::Log loli;
 
-std::vector<Function> parseAssembler(const char *fileI, const char *fileO)
+void parseAssembler(const char *fileI, const char *fileO)
 {
     int num;
     char *str;

@@ -12,7 +12,7 @@ struct Function
     std::vector<std::string> V;
 };
 
-std::vector<Function> parseAssembler(const char* fileI, const char* fileO);
+void parseAssembler(const char* fileI, const char* fileO);
 
 }
 #endif
