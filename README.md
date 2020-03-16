@@ -2,10 +2,10 @@
 
 ### 目录结构
 .
-├── ans             最终结果输出文件 
-├── assembler.cpp   汇编词法分析 
-├── assembler.h 
-├── assembler.l     汇编词法分析lex 文件 
+├── ans             最终结果输出文件 <br>
+├── assembler.cpp   汇编词法分析<br>
+├── assembler.h<br>
+├── assembler.l     汇编词法分析lex 文件
 ├── cal.cpp         代码相似程度计算
 ├── cal.h
 ├── code            用于查重以及处理后的代码
