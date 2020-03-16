@@ -1,41 +1,41 @@
 ## COWFLOW
 
 ### 目录结构
-.
+.<br>
 ├── ans             最终结果输出文件 <br>
 ├── assembler.cpp   汇编词法分析<br>
 ├── assembler.h<br>
-├── assembler.l     汇编词法分析lex 文件
-├── cal.cpp         代码相似程度计算
-├── cal.h
-├── code            用于查重以及处理后的代码
-│   ├── assembler   反汇编得到的汇编代码
-│   │   ├── *.s
-│   │   └── ...
-│   ├── c           用于查重的源代码
-│   │   ├── *.c
-│   │   └── ...
-│   ├── parse       提取并筛选函数名、操作码后的汇编代码  .p 是随便想的后缀
-│   │   ├── *.p
-│   │   └── ...
-│   └── Makefile    负责编译查重的 c 代码并反汇编成汇编文件
-├── config.cpp      读取 config.ini 配置文件
-├── config.h
-├── config.ini      cowflow 配置文件
-├── function.cpp    从 ./code/assembler 里的汇编代码中提取需要的函数名和操作码，输出到 ./code/parse
-├── function.h
-├── getFunc.sh      从汇编代码里根据函数名找到函数下的操作码
-├── km.cpp          KuhnMunkres 算法，用于解决二分图最大权匹配问题
-├── km.h
-├── launch.cpp      main 函数，负责初始化等操作
-├── lcs.cpp         计算字符串的 lcs
-├── log.cpp         日志，非线程安全
-├── log.h
-├── log.txt         最终输出的日志文件
-├── Makefile
-├── netflow.cpp     SPFA 增广，用于解决费用流问题
-├── netflow.h
-└── README.md
+├── assembler.l     汇编词法分析lex 文件<br>
+├── cal.cpp         代码相似程度计算<br>
+├── cal.h<br>
+├── code            用于查重以及处理后的代码<br>
+│   ├── assembler   反汇编得到的汇编代码<br>
+│   │   ├── *.s<br>
+│   │   └── ...<br>
+│   ├── c           用于查重的源代码<br>
+│   │   ├── *.c<br>
+│   │   └── ...<br>
+│   ├── parse       提取并筛选函数名、操作码后的汇编代码  .p 是随便想的后缀<br>
+│   │   ├── *.p<br>
+│   │   └── ...<br>
+│   └── Makefile    负责编译查重的 c 代码并反汇编成汇编文件<br>
+├── config.cpp      读取 config.ini 配置文件<br>
+├── config.h<br>
+├── config.ini      cowflow 配置文件<br>
+├── function.cpp    从 ./code/assembler 里的汇编代码中提取需要的函数名和操作码，输出到 ./code/parse<br>
+├── function.h<br>
+├── getFunc.sh      从汇编代码里根据函数名找到函数下的操作码<br>
+├── km.cpp          KuhnMunkres 算法，用于解决二分图最大权匹配问题<br>
+├── km.h<br>
+├── launch.cpp      main 函数，负责初始化等操作<br>
+├── lcs.cpp         计算字符串的 lcs<br>
+├── log.cpp         日志，非线程安全<br>
+├── log.h<br>
+├── log.txt         最终输出的日志文件<br>
+├── Makefile<br>
+├── netflow.cpp     SPFA 增广，用于解决费用流问题<br>
+├── netflow.h<br>
+└── README.md<br>
 
 ### 使用
 - 将需要查重的代码放在 ./code/c 目录下，并在 ./code 目录下执行 make
