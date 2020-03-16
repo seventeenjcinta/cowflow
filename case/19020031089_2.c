@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #define LEN sizeof(struct student)
-int n;//È«¾Ö±äÁ¿nÎªÁ´±íÖÐ½ÚµãµÄ¸öÊý 
+int n;//È«ï¿½Ö±ï¿½ï¿½ï¿½nÎªï¿½ï¿½ï¿½ï¿½ï¿½Ð½Úµï¿½Ä¸ï¿½ï¿½ï¿½ 
 struct student
 {
 	int num;
@@ -31,19 +31,19 @@ int main()
 		case 1: printf("please input the data:\n");head=create();break; 
 		case 2: printf("please input the num of student you want to delect:\n");scanf("%d",&num);head=delect(head,num);break;
 		case 3: printf("please input the data:\n");scanf("%d%f",&p->num,&p->score);head=insert(head,p);break;
-		default : printf("ÄãÊÇ¸ö´¸×Ó!\n");
+		default : printf("ï¿½ï¿½ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½ï¿½!\n");
 	}
-	printf("¹²ÓÐ%d¸öÑ§ÉúµÄÊý¾Ý\n",n);
+	printf("ï¿½ï¿½ï¿½ï¿½%dï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n",n);
 	output(head);
 	}
 	return 0; 
 }
-struct student *insert(struct student *head,struct student *p0)//²åÈë½ÚµãÍ¬Ê±ÅÅÐò 
+struct student *insert(struct student *head,struct student *p0)//ï¿½ï¿½ï¿½ï¿½Úµï¿½Í¬Ê±ï¿½ï¿½ï¿½ï¿½ 
 {
 	struct student *p1,*p2;
-	if(p0->num!=0)//¿¼ÂÇ²åÈëµÄÊý¾ÝÎÞÐ§ 
+	if(p0->num!=0)//ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ 
 	{
-		if(head==NULL)//¿¼ÂÇ¿Õ±í 
+		if(head==NULL)//ï¿½ï¿½ï¿½Ç¿Õ±ï¿½ 
 			head=p0;
 		else
 		{
@@ -69,7 +69,7 @@ struct student *insert(struct student *head,struct student *p0)//²åÈë½ÚµãÍ¬Ê±ÅÅÐ
 	}
 	return(head);
 }
-struct student *create(void)//´´½¨ 
+struct student *create(void)//ï¿½ï¿½ï¿½ï¿½ 
 {
 	struct student *insert(struct student *head,struct student *p0);
  	struct student *p=NULL,*head=NULL;
@@ -86,31 +86,31 @@ struct student *create(void)//´´½¨
  	free(p);
 	return(head); 
 }
-struct student *delect(struct student *head,int num)//É¾³ý 
+struct student *delect(struct student *head,int num)//É¾ï¿½ï¿½ 
  {
  	struct student *p1=NULL,*p2=NULL;
  	p2=head;
- 	if(head==NULL)//¿¼ÂÇÁ´±íÎª¿ÕµÄÇé¿ö 
+ 	if(head==NULL)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Õµï¿½ï¿½ï¿½ï¿½ 
  		{
 		 	n++;
  			printf("sorry!There is no data.\n");
  		} 
  	else 
 	{	
-		if(head->num==num)//ÔÚÁ´±íÍ·ÕÒµ½Êý¾Ý 
+		if(head->num==num)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ 
  		 	head=head->next;
  		else
  		{
-			while(p2&&p2->num<num)//while(p2->num<num&&p2)--ÕâÑùÐ´ÊÇ´íÎóµÄ£¬ 
- 			{							//'ÇÒ'Âß¼­·ûºÅÈç¹ûÇ°Ãæ½á¹ûÎª0£¬½«²»ÔÙ½øÐÐµÚ¶þ¸öÌõ¼þµÄÅÐ¶¨
+			while(p2&&p2->num<num)//while(p2->num<num&&p2)--ï¿½ï¿½ï¿½ï¿½Ð´ï¿½Ç´ï¿½ï¿½ï¿½Ä£ï¿½ 
+ 			{							//'ï¿½ï¿½'ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù½ï¿½ï¿½ÐµÚ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
  				p1=p2;
  				p2=p2->next;
 			}
 			if(p2)
-				(p1->next)=(p2->next);//ÔÚÁ´±íÖÐ¼ä»òÕßÁ´±íÎ²ÕÒµ½Êý¾Ý 
+				(p1->next)=(p2->next);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î²ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ 
 			else
 			{	
-				printf("The number is not included in this data.\n");//ÕÒ²»µ½Êý¾Ý
+				printf("The number is not included in this data.\n");//ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				n++;
 			}
 		}
@@ -118,11 +118,11 @@ struct student *delect(struct student *head,int num)//É¾³ý
 	n--;
 	return(head);
  }
-void output(struct student *head)//Êä³ö 
+void output(struct student *head)//ï¿½ï¿½ï¿½ 
 {
 	struct student *p=NULL;
 	p=head;
-	if(p)// Á´±í²»Îª¿ÕÊ± 
+	if(p)// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ê± 
 		do
 		{
 			printf("%d %.2f\n",p->num,p->score);

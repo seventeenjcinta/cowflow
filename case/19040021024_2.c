@@ -4,8 +4,8 @@
 #include <stdlib.h>
 struct Node
 {
-	long num;//Ñ§ºÅ
-	float score;//³É¼¨
+	long num;//Ñ§ï¿½ï¿½
+	float score;//ï¿½É¼ï¿½
 	struct Node * next; 
 };
 int n=0;
@@ -20,9 +20,9 @@ void print(struct Node * head)
 			p1=p1->next;
 		}while(p1!=NULL);	
 	}
-	else printf("¿Õ±í£¡\n"); 
+	else printf("ï¿½Õ±ï¿½ï¿½ï¿½\n"); 
 }
-struct Node * build(struct Node * head)//´´½¨
+struct Node * build(struct Node * head)//ï¿½ï¿½ï¿½ï¿½
 {
 	struct Node * insert(struct Node * head,struct Node * stud);
 	struct Node * p;
@@ -37,7 +37,7 @@ struct Node * build(struct Node * head)//´´½¨
 	free(p);
 	return(head); 
 }
-struct Node * insert(struct Node * head,struct Node * stud)//²åÈë 
+struct Node * insert(struct Node * head,struct Node * stud)//ï¿½ï¿½ï¿½ï¿½ 
 {
 	struct Node *p0=stud;
 	struct Node *p1=head;
@@ -76,13 +76,13 @@ struct Node * insert(struct Node * head,struct Node * stud)//²åÈë
 	n++;
 	return (head);
 } 
-struct Node * del(struct Node * head,long num)//É¾³ı 
+struct Node * del(struct Node * head,long num)//É¾ï¿½ï¿½ 
 {
 	struct Node * p1=head;
 	struct Node * p2;
 	if(head==NULL) 
 	{
-		printf("Á´±íÎª¿Õ£¬²»ÄÜÉ¾³ı£¡\n");
+		printf("ï¿½ï¿½ï¿½ï¿½Îªï¿½Õ£ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½\n");
 		return (head);
 	}
 	else
@@ -108,7 +108,7 @@ struct Node * del(struct Node * head,long num)//É¾³ı
 			}
 		}
 		if(num!=p1->num  &&  p1->next==NULL)
-			printf("Êı¾İ²»ÔÚÁĞ±íÖĞ£¬²»ÄÜÉ¾³ı£¡\n"); 
+			printf("ï¿½ï¿½ï¿½İ²ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½ï¿½Ğ£ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½\n"); 
 	}
 	return (head);
 }
@@ -124,8 +124,8 @@ int main ()
 	int choice;
 	while(1)
 	{
-		printf("1¡¢build	2¡¢insert	3¡¢delete	4¡¢exit\n");
-		printf("ÇëÑ¡Ôñ£º");
+		printf("1ï¿½ï¿½build	2ï¿½ï¿½insert	3ï¿½ï¿½delete	4ï¿½ï¿½exit\n");
+		printf("ï¿½ï¿½Ñ¡ï¿½ï¿½");
 		scanf("%d",&choice);
 		if(choice==4)	exit(0);
 		else 
@@ -134,14 +134,14 @@ int main ()
 			{
 				case 1:
 					{
-						printf("ÇëÊäÈëÑ§ÉúµÄÑ§ºÅ¡¢³É¼¨£º\n");
+						printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½Å¡ï¿½ï¿½É¼ï¿½ï¿½ï¿½\n");
 						head=build(head);
 						print(head);
 						break;
 					}
 				case 2:
 					{
-						printf("ÇëÊäÈëÑ§ÉúµÄÑ§ºÅ¡¢³É¼¨£º");
+						printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½Å¡ï¿½ï¿½É¼ï¿½ï¿½ï¿½");
 						p=(struct Node *)malloc(LEN); 
 						scanf("%ld %f",&p->num,&p->score);
 						head=insert(head,p);
@@ -150,7 +150,7 @@ int main ()
 					}
 				case 3:
 					{
-						printf("ÇëÊäÈëÑ§ÉúµÄÑ§ºÅ£º");
+						printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½Å£ï¿½");
 						scanf("%ld",&num);
 						head=del(head,num);
 						print(head);

@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #define LEN sizeof(struct Node)
 
-int n = 0;  //È«¾Ö±äÁ¿n 
+int n = 0;  //È«ï¿½Ö±ï¿½ï¿½ï¿½n 
 
-//´´½¨½á¹¹Ìå 
+//ï¿½ï¿½ï¿½ï¿½ï¿½á¹¹ï¿½ï¿½ 
 struct Node
 {
 	long int num;
@@ -12,7 +12,7 @@ struct Node
 	struct Node *next;
 };
 
-//²åÈë
+//ï¿½ï¿½ï¿½ï¿½
 struct Node *insert (struct Node *head, struct Node *stu)
 {
 	struct Node *p0 = stu, *p1 = head, *p2 = NULL;
@@ -51,7 +51,7 @@ struct Node *insert (struct Node *head, struct Node *stu)
 	return (head);
 } 
 
-//´´½¨
+//ï¿½ï¿½ï¿½ï¿½
 struct Node *create (struct Node *head)
 {
 	struct Node *p;
@@ -68,7 +68,7 @@ struct Node *create (struct Node *head)
 	return (head);
 } 
 
-//É¾³ý
+//É¾ï¿½ï¿½
 struct Node *del (struct Node *head, long int num)
 {
 	struct Node *p1 = head, *p2;
@@ -103,7 +103,7 @@ struct Node *del (struct Node *head, long int num)
 	return (head);
 }
 
-//´òÓ¡
+//ï¿½ï¿½Ó¡
 struct Node *print (struct Node *head)
 {
 	int i; 
@@ -120,7 +120,7 @@ struct Node *print (struct Node *head)
 	return (head);
 } 
 
-//Ö÷º¯Êý
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 int main()
 {
 	int choise;

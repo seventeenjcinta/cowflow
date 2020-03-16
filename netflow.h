@@ -2,7 +2,8 @@
 #include "function.h"
 namespace netflow {
 
-const int N = 10010;
+const int N = 5050;
+const int M = 5050;
 const int INF = 0x3f3f3f3f;
 
 struct Node
@@ -17,13 +18,13 @@ struct Node
 class Netflow
 {
 private:
-    Node node[N];
+    Node node[M * 10];
     int n;
     int m;
     int s;
     int t;
     int ma[N];
-    int head[N];
+    int head[M];
     int top;
     /// SPFA
     double dis[N];
@@ -31,7 +32,7 @@ private:
     int minn[N];
     int mincost[N];
     bool inq[N];
-    int que[N];
+    int que[M * 10];
     int queL;
     int queR;
 

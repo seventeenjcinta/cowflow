@@ -74,7 +74,7 @@ struct studen *del(struct student *head, long num)
     p1 = head;
     if (head == NULL)
     {
-        printf("¿Õ±íÎÞ·¨É¾³ý£¡\n");
+        printf("ï¿½Õ±ï¿½ï¿½Þ·ï¿½É¾ï¿½ï¿½ï¿½ï¿½\n");
         return(head);
     }
     if(num == head->num)
@@ -90,7 +90,7 @@ struct studen *del(struct student *head, long num)
     }
     if(num!=p1->num)
     {
-        printf("Ã»ÕÒµ½ÐèÒª±»É¾³ýµÄÊý¾Ý£¡\n");
+        printf("Ã»ï¿½Òµï¿½ï¿½ï¿½Òªï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½\n");
         return head;
     }
 

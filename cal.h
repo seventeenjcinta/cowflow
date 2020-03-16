@@ -9,7 +9,7 @@ class Cal
 {
 private:
     netflow::Netflow netflow;
-    double calWeight(function::Function funA, function::Function funB);
+    double calWeight(function::Function funA, function::Function funB, int tauAToB);
     int tau(function::Function funcA, function::Function funcB);
 public:
     Cal();

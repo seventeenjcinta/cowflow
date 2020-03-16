@@ -1,34 +1,65 @@
 ## COWFLOW
 
-### 使用
-- 将需要查重的代码放在 ./code/input 目录下，并在 ./code 目录下执行 make
-- ./code 目录下 make 后得到的汇编代码在 ./code/output 下
-- 再在初始目录执行 make
-
 ### 目录结构
-- config.ini 为配置文件，只能为 key = value 的形式，"#" 后为注释
-- log.txt 为日志输出，日志等级等具体配置见 config.ini
-- ./code/input 内为需要查重的代码集
-- ./code/ouput 为代码集编译后得到的汇编代码
-- ./code/parse 为经处理后只保留函数名和有用的操作码后的汇编
+.
+├── ans             最终结果输出文件  
+├── assembler.cpp   汇编词法分析
+├── assembler.h
+├── assembler.l     汇编词法分析lex 文件
+├── cal.cpp         代码相似程度计算
+├── cal.h
+├── code            用于查重以及处理后的代码
+│   ├── assembler   反汇编得到的汇编代码
+│   │   ├── *.s
+│   │   └── ...
+│   ├── c           用于查重的源代码
+│   │   ├── *.c
+│   │   └── ...
+│   ├── parse       提取并筛选函数名、操作码后的汇编代码  .p 是随便想的后缀
+│   │   ├── *.p
+│   │   └── ...
+│   └── Makefile    负责编译查重的 c 代码并反汇编成汇编文件
+├── config.cpp      读取 config.ini 配置文件
+├── config.h
+├── config.ini      cowflow 配置文件
+├── function.cpp    从 ./code/assembler 里的汇编代码中提取需要的函数名和操作码，输出到 ./code/parse
+├── function.h
+├── getFunc.sh      从汇编代码里根据函数名找到函数下的操作码
+├── km.cpp          KuhnMunkres 算法，用于解决二分图最大权匹配问题
+├── km.h
+├── launch.cpp      main 函数，负责初始化等操作
+├── lcs.cpp         计算字符串的 lcs
+├── log.cpp         日志，非线程安全
+├── log.h
+├── log.txt         最终输出的日志文件
+├── Makefile
+├── netflow.cpp     SPFA 增广，用于解决费用流问题
+├── netflow.h
+└── README.md
 
-### 阅读说明
-- 宏定义采用全大写 + 下划线分隔
+### 使用
+- 将需要查重的代码放在 ./code/c 目录下，并在 ./code 目录下执行 make
+- ./code 目录下 make 后得到的汇编代码在 ./code/assembler 下
+- 再在初始目录执行 make
+- 运行 ./cowflow
+
+### 代码阅读说明
+- 宏定义采用全大写，用下划线分隔
 - 变量名采用驼峰命名法，全局变量首字母大写，其他变量首字母小写
 - public 函数名首字母必须大写
 - private 函数名首字母必须小写
 
-### for wxy
-需要关注的三个文件：`assembler.l`、`function.cpp`、`Makefile`
+### lex
+和 lex 相关的三个文件：`assembler.l`、`function.cpp`、`Makefile`
 
 #### 原则
 **不希望和 lex 相关的变量、宏定义对外暴露**
 
 #### 缺点
-- 目前只支持词法分析输出到文件，想获得到词法分析的内容还需要再从文件读取（~~直接输出到变量正在做了~~ 咕咕咕）
+- 目前只支持词法分析输出到文件，想获得到词法分析的内容还需要再从文件读取
 
 #### assembler.l
-用于通过 lex 生成词法分析程序
+用于通过 lex 生成词法分析程序，对汇编代码进行词法分析，筛选需要的函数和操作码
 
 只定义了两种类型的 token：
 - 函数名：形如尖括号后跟一个冒号，尖括号内的即为函数名。正则表达式：`<(.*?)>:`。同时会调用 `parseFuncName` 忽略 `wasteFunctionList` 列表里的函数名

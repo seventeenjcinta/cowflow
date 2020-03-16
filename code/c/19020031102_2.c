@@ -33,29 +33,29 @@ struct student*insert(struct student* head, struct student*p)
 {
 	struct student* p0 = p;
 	struct student* p1=head, * p2=NULL;
-	if (head == NULL)//¿ÕÁ´±íĞÂ½¨Ò»¸ö½Úµã
+	if (head == NULL)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â½ï¿½Ò»ï¿½ï¿½ï¿½Úµï¿½
 	{
 		head = p0;
 		p0->next = NULL;
 	}
-	else				//·Ç¿ÕÁ´±í
+	else				//ï¿½Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½
 	{
 		while (p1->next != NULL&&p1->num<=p0->num)
 		{
 			p2 = p1;
 			p1 = p1->next;
 		}
-		if (p1 == head)		//±íÍ·Ö®Ç°
+		if (p1 == head)		//ï¿½ï¿½Í·Ö®Ç°
 		{
 			p1->next = head;
 			head = p1;
 		}
-		else if (p1->next == NULL && p1->num <= p0->num)	//½áÎ²
+		else if (p1->next == NULL && p1->num <= p0->num)	//ï¿½ï¿½Î²
 		{
 			p1->next = p0;
 			p0->next = NULL;
 		}
-		else												//ÖĞ¼ä
+		else												//ï¿½Ğ¼ï¿½
 		{
 			p2->next = p0;
 			p0->next = p1;
@@ -67,7 +67,7 @@ struct student*insert(struct student* head, struct student*p)
 struct student*dell(struct student*head,long num)
 {
 	struct student*p1, *p2=NULL;
-	if (head == NULL)			//¿ÕÁ´±í
+	if (head == NULL)			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	{
 		printf("List is Null\n");
 		return head;
@@ -78,18 +78,18 @@ struct student*dell(struct student*head,long num)
 		p2 = p1; 
 		p1 = p1->next;
 	}
-	if (num == p1->num)					//ÕÒµ½ÊıÖµ
+	if (num == p1->num)					//ï¿½Òµï¿½ï¿½ï¿½Öµ
 	{
-		if (p1 == head)					//Í·²¿
+		if (p1 == head)					//Í·ï¿½ï¿½
 			head = p1->next;
 		else
-			p2->next = p1->next;		//ÖĞ¼äºÍ½áÎ²
+			p2->next = p1->next;		//ï¿½Ğ¼ï¿½Í½ï¿½Î²
 		printf("Deleted: %ld\n",num);
 		n = n - 1;
 		free(p1);
 	}
 	else
-		printf("Î´ÕÒµ½Êı¾İ\n");		//Î´ÕÒµ½
+		printf("Î´ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½\n");		//Î´ï¿½Òµï¿½
 	return head;
 }
 void print(struct student *head)
@@ -112,12 +112,12 @@ void main()
 	long del_num;
 	int choice;
 	printf("*********Creat list!***********\n");
-	printf("ÇëÊäÈë³õÊ¼Ñ§ºÅºÍ³É¼¨£¨Ñ§ºÅ±£³ÖÓĞĞò£©:       (0.0 for exit)\n");
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼Ñ§ï¿½ÅºÍ³É¼ï¿½ï¿½ï¿½Ñ§ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:       (0.0 for exit)\n");
 	head = creat();
 	print(head);
 	do
 	{
-		printf("\nÇëÊäÈëÖ¸Áî£º 1.²åÈë\t2.É¾³ı\t0.ÍË³ö\n");
+		printf("\nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½î£º 1.ï¿½ï¿½ï¿½ï¿½\t2.É¾ï¿½ï¿½\t0.ï¿½Ë³ï¿½\n");
 		choice = -1;
 		printf("Please choose: ");
 		getchar();
@@ -126,15 +126,15 @@ void main()
 		switch (choice)
 		{
 		case 1:
-			printf("ÇëÊäÈëÑ§ºÅºÍ³É¼¨: ");
+			printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ÅºÍ³É¼ï¿½: ");
 			p = (struct student*)malloc(len);
 			scanf("%ld %f", &p->num, &p->score);
 			head = insert(head, p);
-			printf("²åÈëÑ§ºÅ: %ld\n", p->num);
+			printf("ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½: %ld\n", p->num);
 			print(head);
 			break;
 		case 2:
-			printf("ÇëÊäÈëÑ§ºÅ: ");
+			printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½: ");
 			scanf("%ld",&del_num);
 			head = dell(head, del_num);
 			print(head);

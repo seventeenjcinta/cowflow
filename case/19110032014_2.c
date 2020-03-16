@@ -16,10 +16,10 @@ void print(struct student *head)
     p=head;
     if(head=NULL)
     {
-        printf("¿Õ±í!!!");
+        printf("ï¿½Õ±ï¿½!!!");
         return;
     }
-    printf("ÏÖÓĞÑ§ÉúĞÅÏ¢Îª:\n");
+    printf("ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½Ï¢Îª:\n");
     while(p!=NULL)
     {
         printf("%ld %s\n",p->num,p->name);
@@ -35,7 +35,7 @@ struct student *creat(void)
     p1=(struct student *)malloc(LEN);
     p2=p1;
     head=NULL;
-    printf("ÇëÊäÈëÑ§ÉúĞÅÏ¢:\n");
+    printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½Ï¢:\n");
     printf("%d )",i+1);
     scanf("%ld,%s",&p1->num,&p1->name);
     if(p1->num==0)head=NULL;
@@ -107,7 +107,7 @@ struct student *del(struct student *head,long num)
     p2=head;
     if(head==NULL)
     {
-        printf("¿Õ±í!!!");
+        printf("ï¿½Õ±ï¿½!!!");
         return(head);
     }
     while(p1->num!=num)
@@ -176,23 +176,23 @@ void main()
     head=creat();
     head=sort(head);
     print(head);
-    printf("ÇëÊäÈëÏë²åÈëµÄÑ§ÉúĞÅÏ¢");
+    printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½Ï¢");
     scanf("%ld,%s",&stu->num,&stu->name);
     head=ins(head,stu);
     print(head);
     while(1)
     {
-        printf("1.insert  2.delete  0.exit\nÇëÑ¡Ôñ:");
+        printf("1.insert  2.delete  0.exit\nï¿½ï¿½Ñ¡ï¿½ï¿½:");
         scanf("%d",&m);
         switch(m)
         {
             case 1: p=(struct student *)malloc(LEN);
-                    printf("ÇëÊäÈëÑ§ÉúĞÅÏ¢:");
+                    printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½Ï¢:");
                     scanf("%ld,%s",&p->num,&p->name);
                     head=ins(head,p);
                     print(head);
                     i++;break;
-            case 2: printf("ÇëÊäÈëÏñÉ¾³ıµÄÑ§ÉúÑ§ºÅ");
+            case 2: printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½Ñ§ï¿½ï¿½");
                     scanf("%ld",&num);
                     head=del(head,num);
                     print(head);break;

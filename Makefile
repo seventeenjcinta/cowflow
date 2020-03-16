@@ -54,4 +54,4 @@ buildChrome.o: buildChrome.cpp
 #	$(CLANG) -O2 -emit-llvm $^ -c -o $@
 
 clean: 
-	rm -rf cowflow *.o
+	rm -rf cowflow *.o ./code/parse/*

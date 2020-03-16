@@ -1,7 +1,7 @@
 #include "log.h"
 #include "netflow.h"
 #include <cstring>
-#define EPS 1e-6
+#define EPS 1e-8
 namespace netflow {
 
 Netflow::Netflow()
@@ -16,7 +16,7 @@ Netflow::~Netflow()
 
 void Netflow::AddChrome(int from, int to, int flow, double v)
 {
-    LogInfo("%d -> %d = %d %lf\n", from, to, flow, v);
+    LogInfo("add edge %d -> %d = %d %lf\n", from, to, flow, v);
 	node[top].from = from;
 	node[top].to = to;
 	node[top].flow = flow;

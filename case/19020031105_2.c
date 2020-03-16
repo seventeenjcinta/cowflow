@@ -22,13 +22,13 @@ int main()
 	Node* head;
 	int choice;
 	
-	printf("**********´´½¨Á´±í**********\n");
+	printf("**********ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**********\n");
 	head = CreateNode();
 	PrintNode(head);
-	printf("ÇëÊäÈëÏÂÃæµÄÒ»¸öÖ¸Áî:\n");
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ö¸ï¿½ï¿½:\n");
 	do
 	{
-		printf("1.²åÈë 2.É¾³ý 0.ÍË³ö\n");
+		printf("1.ï¿½ï¿½ï¿½ï¿½ 2.É¾ï¿½ï¿½ 0.ï¿½Ë³ï¿½\n");
 		scanf("%d", &choice);
 		if (!choice)
 			break;
@@ -60,9 +60,9 @@ Node* InsertNode(Node* head)
 	int num;
 	float score;
 
-	printf("ÇëÊäÈëÑ§ÉúµÄÑ§ºÅ:");
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½:");
 	scanf("%d", &num);
-	printf("ÇëÊäÈëÑ§ÉúµÄ³É¼¨:");
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½Ä³É¼ï¿½:");
 	scanf("%f", &score);
 
 	if (n == 0)
@@ -113,14 +113,14 @@ Node* DeleteNode(Node* head)
 {
 	if (!n)
 	{
-		printf("Á´±íÎª¿Õ!\n");
+		printf("ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½!\n");
 		return head;
 	}
 
 	int num;
 	Node* find = head;
 	Node* pre = head;
-	printf("ÇëÊäÈëÉ¾³ýµÄÑ§ÉúÑ§ºÅ:");
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½Ñ§ï¿½ï¿½:");
 	scanf("%d", &num);
 
 	while (num > find->num && find->next != NULL)
@@ -143,7 +143,7 @@ Node* DeleteNode(Node* head)
 	}
 	else
 	{
-		printf("%d²»ÔÚÁ´±íÄÚ!\n", num);
+		printf("%dï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!\n", num);
 	}
 
 	if (head == NULL)
@@ -155,7 +155,7 @@ Node* DeleteNode(Node* head)
 void PrintNode(Node* head)
 {
 	printf("\n");
-	printf("Á´±íÄÚÓÐ%d¸ö½Úµã£º\n", n);
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½%dï¿½ï¿½ï¿½Úµã£º\n", n);
 	printf("************************\n");
 	while (head != NULL && n)
 	{

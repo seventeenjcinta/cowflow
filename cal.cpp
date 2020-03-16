@@ -50,7 +50,7 @@ double Cal::Solve(std::vector<function::Function> funA, std::vector<function::Fu
             double w;
 
             c = tau(funA[i], funB[j]);
-            w = calWeight(funA[i], funB[j]);
+            w = calWeight(funA[i], funB[j], c);
             netflow.AddChrome(i + 1, funASize + j + 1, c, -w);
             netflow.AddChrome(funASize + j + 1, i + 1, 0, w);
         }
@@ -83,14 +83,13 @@ double Cal::Solve(std::vector<function::Function> funA, std::vector<function::Fu
 //     return ans;
 // }
 
-double Cal::calWeight(function::Function funA, function::Function funB)
+double Cal::calWeight(function::Function funA, function::Function funB, int tauAToB)
 {
     double ans;
-    int tauAToB;
     int tauBToA;
     
     LogInfo("cal begin: %d %d\n", funA.len, funB.len);
-    tauAToB = tau(funA, funB);
+    // tauAToB = tau(funA, funB);
     tauBToA = tau(funB, funA);
     LogInfo("AToB: %d  BToA: %d\n", tauAToB, tauBToA);
     ans = std::max(tauAToB, tauBToA);
@@ -105,23 +104,22 @@ int Cal::tau(function::Function funcA, function::Function funcB)
     int functionBLen;
     int intervalSize;
     int cmpStrSize;
+    int left;
+    int right;
     int ans;
 
-    ans = 0;
     intervalSize = GAMMA * funcA.len;
+    left = 0;
+    right = left + intervalSize;
+    ans = lcs::InstructionsLCS(funcA.V, funcB.V, 0, funcA.len - 1, 0, funcB.len - 1);
     for(int i = 0; i < funcB.len; i ++) {
-        int left;
-        int right;
-        std::vector<std::string> cmpFunc(funcB.len);
-        // std::vector<std::string> cmpFunc(funcB.V.begin() + left, funcB.V.begin() + right - left + 1);
-
-        left = i;
-        right = std::min(left + intervalSize, funcB.len - 1);
-        // printf("[%d %d] %d\n", left, right, funcB.len);
-        LogDebug("[%d %d] %d\n", left, right, funcB.len);
-        std::copy(funcB.V.begin() + left, funcB.V.begin() + right - left + 1, cmpFunc.begin());
-        // LogDebug("[%d %d] %d\n", left, right, funcB.len);
-        ans = std::max(ans, lcs::InstructionsLCS(funcA.V, cmpFunc));
+        if(right < funcB.len) {
+            ans = std::max(ans, lcs::InstructionsLCS(funcA.V, funcB.V, 0, funcA.len - 1, left, right));
+        } else {
+            break;
+        }
+        left ++;
+        right ++;
     }
 
     return ans;
